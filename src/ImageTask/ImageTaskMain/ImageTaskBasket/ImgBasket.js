@@ -1,47 +1,50 @@
-import React, { useState } from 'react'
 import "./ImgBasket.scss"
 import { v4 as uuidv4 } from 'uuid';
 
-export default function ImgBasket({search,imageSrc}) {
-    const[basketDiv,setBasketDiv] = useState([])
-    const[basketObj,setBasketObj] = useState({})
-
+export default function ImgBasket({search,src,setSearch,setBasketArrPhotos}) {
     let searchName = search.searchName
+    let basketArr = []
 
+    if(!sessionStorage.getItem(searchName) && searchName){
+      sessionStorage.setItem(searchName,[])
+     }
 
-    if(basketDiv.length === 0){
-        setBasketDiv([searchName])
+    for(let key in sessionStorage){
+      if(sessionStorage.hasOwnProperty(key)){
+        basketArr.push(key)
+      }
     }
 
-    else if(basketDiv.length > 0){
-        for(let i = 0;i < basketDiv.length;i++){
-            if(basketDiv[i] === searchName) break
-            else if(basketDiv[i]  !== searchName && i === basketDiv.length-1){
-              setBasketDiv([...basketDiv,searchName])
-            }
+    function drop(e){
+      e.preventDefault()
+      let text = e.target.innerText
+      if(text === searchName){
+        setSearch({...search,photoArr:search.photoArr.filter(el=>el.id !== src.id)})
+        if(!sessionStorage.getItem(text).length){
+          sessionStorage.setItem(text,JSON.stringify([src.src]))
         }
+        else if(sessionStorage.getItem(text).length){
+          sessionStorage.setItem(text,JSON.stringify([...JSON.parse(sessionStorage.getItem(text)),src.src]))
+          if(search.photoArr.length === 1){
+            alert("congrtulations")
+          } 
+        }
+      }
     }
 
+   
   return (
     <div className='imgBasket'  >
-       {basketDiv.length && basketDiv.map(el=>{
+      {basketArr.length > 0 && basketArr.map(el=>{
         return(
-            <div className='newBasket' 
+          <div className='newBasket' 
             onDragOver={e=>e.preventDefault()}
-            onDrop={(e)=>{
-              e.preventDefault()
-              if(e.target.innerText === search.searchName){
-                if(!basketObj.searchName){
-                  setBasketObj({...basketObj,searchName : imageSrc})
-                }
-                
-              }
-              console.log(imageSrc)
-              }}  key={uuidv4()} >
-              {el}
-            </div> 
+            onDrop={(e)=>drop(e)}  key={uuidv4()} 
+            onClick={(e=>setBasketArrPhotos([...JSON.parse(sessionStorage.getItem(e.target.innerText))]))}>
+            {el}
+          </div> 
         )
-       }) }
+      })}
     </div>
   )
 }

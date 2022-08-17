@@ -16,7 +16,7 @@ export default function Search({setSearch}) {
    
   return (
     <div className='imageSearch'>
-           <input maxLength="12" type="search" value={state} onChange={(e)=>setState(e.target.value)} placeholder="Search"/>
+           <input maxLength="18" type="search" value={state} onChange={(e)=>setState(e.target.value)} placeholder="Search"/>
            <button onClick={()=>fetchSearch()}>Search</button>
     </div>
   )

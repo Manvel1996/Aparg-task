@@ -8,13 +8,13 @@ function App() {
 
   const[search,setSearch] = useState({})
 
-  
+   
 
 
   return (
     <div className="App">
       <Search  setSearch={setSearch}/>
-      <Main search={search} />
+      <Main search={search} setSearch={setSearch} />
     </div>
   );
 }

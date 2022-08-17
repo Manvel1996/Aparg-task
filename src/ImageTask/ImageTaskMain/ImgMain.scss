@@ -1,6 +1,12 @@
 .imageMain{
     text-align: center;
     margin-block: 20px;
+    width: 100%;
+    .imageBoard{
+        border: 1px dotted gray;
+        min-height: 200px;
+        padding: 15px;
+    }
     img{
         width: 130px;
         height: 130px;
