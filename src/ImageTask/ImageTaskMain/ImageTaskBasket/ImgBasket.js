@@ -32,7 +32,6 @@ export default function ImgBasket({src,setSomeState,setBasketPhotoArr,basketPhot
             onDragOver={e=>e.preventDefault()}
             onDrop={(e)=>drop(e)}
             onClick={(e)=>{
-              console.log(sessionStorage.getItem(e.target.innerText) === null)
               if(e.target.innerText === basketPhotoArr.name ) setBasketPhotoArr({arr:[],name:""})
               else setBasketPhotoArr({arr:JSON.parse(sessionStorage.getItem(e.target.innerText)),name:e.target.innerText})
             }}>
