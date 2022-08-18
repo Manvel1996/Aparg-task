@@ -1,7 +1,7 @@
 .imgBasket{
-    margin: 50px;
+    margin-block: 50px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 150px);
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     .newBasket{
         height: 60px;

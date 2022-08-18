@@ -5,16 +5,16 @@ import Main from './ImageTask/ImageTaskMain/ImgMain';
 
 function App() {
 
-
-  const[search,setSearch] = useState({})
+  const[state,setState] = useState("")
+  // const[search,setSearch] = useState({})
 
    
 
 
   return (
     <div className="App">
-      <Search  setSearch={setSearch}/>
-      <Main search={search} setSearch={setSearch} />
+      <Search  state={state} setState={setState}/>
+      <Main />
     </div>
   );
 }

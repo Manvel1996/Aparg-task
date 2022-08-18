@@ -2,10 +2,11 @@ import React from 'react'
 import './BasketPhotos.scss'
 import { v4 as uuidv4 } from 'uuid';
 
-export default function BasketPhotos({basketArrPhotos}) {
+export default function BasketPhotos({basketPhotoArr}) {
   return (
     <div className='basketPhotos'>
-        {basketArrPhotos.map(el=>{
+                  <p>Group pics</p>
+        {basketPhotoArr["arr"] && basketPhotoArr.arr.map(el=>{
             return(
                 <img src={el} key={uuidv4()}/>
             )

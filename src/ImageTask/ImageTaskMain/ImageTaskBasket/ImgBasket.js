@@ -1,48 +1,44 @@
 import "./ImgBasket.scss"
 import { v4 as uuidv4 } from 'uuid';
 
-export default function ImgBasket({search,src,setSearch,setBasketArrPhotos}) {
-    let searchName = search.searchName
-    let basketArr = []
-
-    if(!sessionStorage.getItem(searchName) && searchName){
-      sessionStorage.setItem(searchName,[])
-     }
-
-    for(let key in sessionStorage){
-      if(sessionStorage.hasOwnProperty(key)){
-        basketArr.push(key)
-      }
-    }
+export default function ImgBasket({src,setSomeState,setBasketPhotoArr,basketPhotoArr}) {
 
     function drop(e){
       e.preventDefault()
-      let text = e.target.innerText
-      if(text === searchName){
-        setSearch({...search,photoArr:search.photoArr.filter(el=>el.id !== src.id)})
-        if(!sessionStorage.getItem(text).length){
-          sessionStorage.setItem(text,JSON.stringify([src.src]))
+      
+      if(e.target.innerText === src.group){
+        sessionStorage.setItem("fetchPhotoArr",JSON.stringify(
+          JSON.parse(sessionStorage.getItem("fetchPhotoArr")).filter(el=>el.id !== src.id)
+          ))
+          setSomeState([])
+        if(!sessionStorage.getItem(src.group).length){
+          sessionStorage.setItem(src.group,JSON.stringify([src.src]))
         }
-        else if(sessionStorage.getItem(text).length){
-          sessionStorage.setItem(text,JSON.stringify([...JSON.parse(sessionStorage.getItem(text)),src.src]))
-          if(search.photoArr.length === 1){
-            alert("congrtulations")
-          } 
+        else if(sessionStorage.getItem(src.group).length){
+          sessionStorage.setItem(src.group,JSON.stringify([...JSON.parse(sessionStorage.getItem(src.group)),src.src]))
+          setBasketPhotoArr([])
+          if(JSON.parse(sessionStorage.getItem("fetchPhotoArr")).length < 1){
+            alert("Finish congratulations")
+          }
         }
-      }
+      }     
     }
 
    
   return (
     <div className='imgBasket'  >
-      {basketArr.length > 0 && basketArr.map(el=>{
+      {sessionStorage.getItem("searchWordArr") && JSON.parse(sessionStorage.getItem("searchWordArr")).map(el=>{
         return(
-          <div className='newBasket' 
+          <div key={uuidv4()} className='newBasket'
             onDragOver={e=>e.preventDefault()}
-            onDrop={(e)=>drop(e)}  key={uuidv4()} 
-            onClick={(e=>setBasketArrPhotos([...JSON.parse(sessionStorage.getItem(e.target.innerText))]))}>
+            onDrop={(e)=>drop(e)}
+            onClick={(e)=>{
+              if(sessionStorage.getItem(e.target.innerText) == false)return
+              else if(e.target.innerText === basketPhotoArr.name ) setBasketPhotoArr({arr:[],name:""})
+              else setBasketPhotoArr({arr:JSON.parse(sessionStorage.getItem(e.target.innerText)),name:e.target.innerText})
+            }}>
             {el}
-          </div> 
+          </div>
         )
       })}
     </div>
