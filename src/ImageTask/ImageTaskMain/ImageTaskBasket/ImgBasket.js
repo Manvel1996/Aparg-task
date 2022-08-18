@@ -4,15 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 export default function ImgBasket({src,setSomeState,setBasketPhotoArr,basketPhotoArr}) {
 
     function drop(e){
-      e.preventDefault()
-      
+      e.preventDefault()      
       if(e.target.innerText === src.group){
         sessionStorage.setItem("fetchPhotoArr",JSON.stringify(
           JSON.parse(sessionStorage.getItem("fetchPhotoArr")).filter(el=>el.id !== src.id)
           ))
-          setSomeState([])
         if(!sessionStorage.getItem(src.group).length){
           sessionStorage.setItem(src.group,JSON.stringify([src.src]))
+          setSomeState([])
         }
         else if(sessionStorage.getItem(src.group).length){
           sessionStorage.setItem(src.group,JSON.stringify([...JSON.parse(sessionStorage.getItem(src.group)),src.src]))
@@ -33,8 +32,8 @@ export default function ImgBasket({src,setSomeState,setBasketPhotoArr,basketPhot
             onDragOver={e=>e.preventDefault()}
             onDrop={(e)=>drop(e)}
             onClick={(e)=>{
-              if(sessionStorage.getItem(e.target.innerText) == false)return
-              else if(e.target.innerText === basketPhotoArr.name ) setBasketPhotoArr({arr:[],name:""})
+              console.log(sessionStorage.getItem(e.target.innerText) === null)
+              if(e.target.innerText === basketPhotoArr.name ) setBasketPhotoArr({arr:[],name:""})
               else setBasketPhotoArr({arr:JSON.parse(sessionStorage.getItem(e.target.innerText)),name:e.target.innerText})
             }}>
             {el}
