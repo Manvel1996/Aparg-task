@@ -8,7 +8,7 @@ export default function BasketPhotos({basketPhotoArr}) {
                   <p>Group pics</p>
         {basketPhotoArr["arr"] && basketPhotoArr.arr.map(el=>{
             return(
-                <img src={el} key={uuidv4()}/>
+                <img src={el} key={uuidv4()} alt={"photo"} />
             )
         })}
     </div>

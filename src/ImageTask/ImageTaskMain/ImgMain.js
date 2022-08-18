@@ -5,7 +5,7 @@ import BasketPhotos from './BasketPhotos/BasketPhotos';
 import { useState } from 'react';
 
 export default function Main() {
-  const[someState,setSomeState] = useState([])
+  const[,setSomeState] = useState([])
   const[basketPhotoArr,setBasketPhotoArr] = useState({})
 
 let src = {}
@@ -16,8 +16,8 @@ let src = {}
       <div className='imageBoard'>
         {sessionStorage.getItem("fetchPhotoArr") && JSON.parse(sessionStorage.getItem("fetchPhotoArr")).map(el=>{
           return(
-            <img key={uuidv4()}   onDragStart={(e)=>{
-                  src["src"]=e.target.src; src["group"]=el.group; src["id"]= el.id
+            <img key={uuidv4()} alt={el.group}  onDragStart={(e)=>{
+                  src["src"]=e.target.src;  src["group"]=el.group; src["id"]= el.id
                 }
               }
               draggable="true"
